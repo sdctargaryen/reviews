@@ -1,16 +1,7 @@
-// const mongoose = require('mongoose');
-// mongoose.connect('mongodb://localhost/reviewsData', { useNewUrlParser: true }, () => {
-//   console.log('reviews connected');
-// });
-
-// db = mongoose.connection;
-
-// module.exports = db;
-
 const Sequelize = require('sequelize');
 
 const sequelize = new Sequelize('properties', 'fred', 'password', {
-    host: '18.191.180.14',
+    host: '18.219.139.144',
     dialect: 'mysql',
     logging: false
   });
