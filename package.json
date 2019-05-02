@@ -5,10 +5,11 @@
   "main": "server/server.js",
   "scripts": {
     "build": "webpack -d --watch",
-    "start": "nodemon server/server.js && node database/reviewGenerator.js",
+    "start": "nodemon server/server.js",
     "seed": "node database/reviewGenerator.js",
     "server-dev": "nodemon server/server.js",
-    "test": "mocha test"
+    "test": "mocha test",
+    "seedReview": "mysql -u root -p properties LOAD DATA LOCAL INFILE 'C:/Users/pmp4r/Desktop/HRLA/reviews/reviewFile.csv'  INTO TABLE reviews  FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n' SET id=null;"
   },
   "repository": {
     "type": "git",
@@ -35,12 +36,15 @@
     "css-modules": "^0.3.0",
     "express": "^4.16.4",
     "flexbox": "0.0.3",
+    "mariadb": "^2.0.3",
     "mongoose": "^5.4.20",
     "morgan": "^1.9.1",
+    "mysql2": "^1.6.5",
     "nodemon": "^1.18.10",
     "react": "^16.8.5",
     "react-dom": "^16.8.5",
     "react-paginate": "^6.3.0",
+    "sequelize": "^5.7.6",
     "style-loader": "^0.23.1"
   }
 }

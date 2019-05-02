@@ -1,34 +1,43 @@
-const Model = require('../database/models.js');
-const mongoose = require('mongoose');
+const model = require('../database/models.js');
 
-module.exports = {
-  getRating: (req, res) => {
-    Model.Rating.countDocuments()
-      .then((count) => {
-        let random = Math.random() * count;
-        return Model.Rating.findOne().skip(random);
-      })  
-      .then((data) => {
-        res.status(200).send(data)
+const controller = {
+  getReview: (req, res) => {
+    const { property_id } = req.params
+    console.log({ property_id })
+      model.findAll({ where: { property_id } })
+      .then((data) => { 
+        res.status(200).send(data);
+      })
+      .catch(err => {
+        console.error(err)
       })
   },
-
-  postRating: (req, res) => {
-    
+  addReview: (req, res) => {
+      const { property_id, user, date, text, userImage, accuracy, communication, cleanliness, location, checkIn, value } = req.body;
+      
+      model.create({ property_id, user, date, text, userImage, accuracy, communication, cleanliness, location, checkIn, value })
+      .then(((data) => {
+        res.status(201).send(data);
+      }))
+      .catch(error => console.error(error));
   },
+  update: (req, res) => {
+      const { text, accuracy, communication, cleanliness, location, checkIn, value } = req.body;
+      const { property_id } = req.params;
 
-  getReviewCount: (req, res) => {
-    Model.Review.countDocuments()
-      .then((count) => {
-        res.status(200).send({count});
-      }) 
+      model.update({ text, accuracy, communication, cleanliness, location, checkIn, value }, { where: { property_id } })
+      .then((data) => {
+        res.status(202).send(data);
+      })
+      .catch(error => console.error(error));
   },
-
-  getReviewPage: (req, res) => {
-    const page = req.params.page;
-    Model.Review.find().skip((page - 1) * 7).limit(7)
-    .then((data) => {
-      res.status(200).send(data)
-    })
-  }  
+  delete: (req, res) => {
+      const { property_id } = req.params;
+      model.destroy({ where: { property_id } })
+      .then((data) => {
+        res.status(200).send('Deleted Boi');
+      })
+  }
 }
+
+module.exports = controller;

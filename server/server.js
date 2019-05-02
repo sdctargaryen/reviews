@@ -1,7 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
-const db = require('../database/index.js')
 const path = require('path');
 const router = require('./router.js');
 
@@ -13,6 +12,6 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 app.use('/api', router);
 
-const port = 3004;
+const port = 1143;
 
 app.listen(port, () => console.log(`Server up on ${port}`));

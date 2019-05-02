@@ -1,26 +1,27 @@
-const mongoose = require('mongoose');
+const Sequelize = require('sequelize');
+const db = require('./index.js')
 
-const ratingSchema = mongoose.Schema({
-  accuracy: Number,
-  communication: Number,
-  cleanliness: Number,
-  location: Number,
-  checkIn: Number,
-  value: Number,
-  average: Number
-})
+const Model = db.define (
+    'reviews',
+    {
+        property_id: {type: Sequelize.INTEGER, allowedNull: true },
+        user: {type: Sequelize.STRING, allowedNull: false },
+        date: {type: Sequelize.STRING, allowedNull: false },
+        text: {type: Sequelize.STRING, allowedNull: false },
+        userImage: {type: Sequelize.STRING, allowedNull: false },
+        accuracy: {type: Sequelize.INTEGER, allowedNull: false },
+        communication: {type: Sequelize.INTEGER, allowedNull: false },
+        cleanliness: {type: Sequelize.INTEGER, allowedNull: false },
+        location: {type: Sequelize.INTEGER, allowedNull: false },
+        checkIn: {type: Sequelize.INTEGER, allowedNull: false },
+        value: {type: Sequelize.INTEGER, allowedNull: false },
+    },
+    { timestamps: false },
+);
 
-const reviewSchema = mongoose.Schema({
-  user: String,
-  date: String,
-  text: String,
-  userImage: String
-})
+db
+  .sync()
+  .then(() => console.log('Synced with MYSQL Database'))
+  .catch(error => console.error(error));
 
-const Rating = mongoose.model('Rating', ratingSchema);
-const Review = mongoose.model('Review', reviewSchema);
-
-module.exports = {
-  Rating,
-  Review
-}
+  module.exports = Model;
