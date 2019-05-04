@@ -3,7 +3,13 @@ const Sequelize = require('sequelize');
 const sequelize = new Sequelize('properties', 'fred', 'password', {
     host: '18.219.139.144',
     dialect: 'mysql',
-    logging: false
+    logging: false,
+    pool: {
+      max: 5,
+      min: 0,
+      acquire: 30000,
+      idle: 10000
+    }
   });
 
   sequelize
